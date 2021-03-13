@@ -1,32 +1,36 @@
 import React from 'react'
-import { View, Text, Button, StyleSheet, Switch } from 'react-native'
-import { useTheme } from '@react-navigation/native'
-import { ThemeContext } from '../../components/context'
+import { View } from 'react-native'
+import { List, Switch } from 'react-native-paper'
+import { useSelector, useDispatch } from 'react-redux'
+import { changeTheme } from '../../redux/themeStore/action'
+
 const SettingsScreen = () => {
-  const appTheme = useTheme()
-  const { toggleTheme } = React.useContext(ThemeContext)
+  const data = useSelector(state => state)
+  const darkTheme = data.themeReducer.isDarkTheme
+  const themeDispatch = useDispatch()
+
+  const toggleSwitch = value => {
+    themeDispatch(changeTheme(value))
+  }
 
   return (
-    <View style={styles.container}>
-      <Text>Settings Screen</Text>
-      <Switch
-        trackColor={{ false: '#767577', true: '#81b0ff' }}
-        thumbColor={appTheme.dark ? '#f5dd4b' : '#f4f3f4'}
-        ios_backgroundColor="#3e3e3e"
-        onValueChange={toggleTheme}
-        value={appTheme.dark}
+    <View
+      style={{
+        flex: 1
+      }}>
+      <List.Item
+        onPress={() => {
+          themeDispatch(changeTheme(!darkTheme))
+        }}
+        title="Dark / Ligt Mode"
+        description="Change App Theme"
+        left={props => <List.Icon {...props} icon="theme-light-dark" />}
+        right={props => (
+          <Switch value={darkTheme} onValueChange={toggleSwitch} />
+        )}
       />
-      <Button title="Click Here" onPress={() => alert('Button Clicked!')} />
     </View>
   )
 }
 
 export default SettingsScreen
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-})

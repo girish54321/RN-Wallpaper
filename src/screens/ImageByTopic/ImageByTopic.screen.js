@@ -21,8 +21,6 @@ const ImageByTopic = ({ navigation, route }) => {
   }, [])
 
   const getImages = () => {
-    console.log('PAGE NUMBER TOPICS', pageNumber)
-
     setloading(true)
     RNFetchBlob.fetch(
       'GET',
@@ -36,7 +34,7 @@ const ImageByTopic = ({ navigation, route }) => {
         if (status == 200) {
           setpageNumber(pageNumber + 1)
           let json = res.json()
-          console.log('JSONE', json.length)
+
           if (apiData == null) {
             let list = json.map(data => {
               return {

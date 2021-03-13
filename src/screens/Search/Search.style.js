@@ -12,5 +12,12 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     marginVertical: 16
+  },
+  bottom: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: 1
   }
 })

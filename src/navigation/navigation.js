@@ -1,72 +1,84 @@
-import React from 'react'
-import Home from '../screens/Home/Home.screen'
-import Trending from '../screens/Trending/Trending.screen'
-import Category from '../screens/Category/Category.screen'
+import React, { useEffect } from 'react'
 import ImageByTopic from '../screens/ImageByTopic/ImageByTopic.screen'
 import { createStackNavigator } from '@react-navigation/stack'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import ImageViewScreen from '../screens/imageVIewScreen/ImageVIew.screen'
 import SearchScreen from '../screens/Search/Search.screen'
 import SettingsScreen from '../screens/settings/SettingsScreen'
+import HomeMain from '../screens/Home/HomeMain'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Colors } from '../utils/Colors'
 import {
   NavigationContainer,
   DefaultTheme as NavigationDefaultTheme,
   DarkTheme as NavigationDarkTheme
 } from '@react-navigation/native'
+import {
+  Provider as PaperProvider,
+  DefaultTheme as PaperDefaultTheme,
+  DarkTheme as PaperDarkTheme
+} from 'react-native-paper'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { ThemeContext } from '../components/context'
-const Tab = createMaterialTopTabNavigator()
+import { useSelector, useDispatch } from 'react-redux'
+import { changeTheme } from '../redux/themeStore/action'
+
 const Stack = createStackNavigator()
 
 const MainNavigation = () => {
-  const [isDarkTheme, setIsDarkTheme] = React.useState(false)
-  const CustomDefaultTheme = {
+  const data = useSelector(state => state)
+  const darkTheme = data.themeReducer.isDarkTheme
+  const themeDispatch = useDispatch()
+
+  useEffect(() => {
+    checkUserTheme()
+  }, [])
+
+  const checkUserTheme = () => {
+    AsyncStorage.getItem('THEME')
+      .then(value => {
+        if (value) {
+          let data = JSON.parse(value)
+          themeDispatch(changeTheme(data.isDarkTheme))
+        } else {
+          themeDispatch(changeTheme(false))
+        }
+      })
+      .catch(() => {
+        themeDispatch(changeTheme(false))
+      })
+  }
+
+  let CustomDefaultTheme = {
+    ...PaperDefaultTheme,
     ...NavigationDefaultTheme,
     colors: {
+      ...PaperDefaultTheme.colors,
       ...NavigationDefaultTheme.colors,
+      accent: Colors.primary,
+      primary: Colors.primary,
+      card: 'rgb(255, 255, 255)',
       background: '#ffffff',
       text: '#333333'
     }
   }
-  const CustomDarkTheme = {
+
+  let CustomDarkTheme = {
+    ...PaperDarkTheme,
     ...NavigationDarkTheme,
     colors: {
+      ...PaperDarkTheme.colors,
       ...NavigationDarkTheme.colors,
-      background: Colors.backgroundColor,
+      accent: Colors.primary,
+      primary: Colors.primary,
+      card: 'rgb(18, 18, 18)',
+      background: '#333333',
       text: '#ffffff'
     }
   }
-  const theme = isDarkTheme ? CustomDarkTheme : CustomDefaultTheme
-  const themContext = React.useMemo(
-    () => ({
-      toggleTheme: () => {
-        setIsDarkTheme(isDarkTheme => !isDarkTheme)
-        console.log('Change theme')
-        console.log('theme', theme)
-      }
-    }),
-    []
-  )
 
-  const MyTabs = () => {
-    return (
-      <Tab.Navigator
-        lazy={true}
-        tabBarOptions={{
-          tabStyle: {
-            backgroundColor: isDarkTheme ? Colors.backgroundColor : Colors.white
-          }
-        }}>
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Trending" component={Trending} />
-        <Tab.Screen name="Category" component={Category} />
-      </Tab.Navigator>
-    )
-  }
   return (
-    <ThemeContext.Provider value={themContext}>
-      <NavigationContainer theme={theme}>
+    <PaperProvider theme={darkTheme ? CustomDarkTheme : CustomDefaultTheme}>
+      <NavigationContainer
+        theme={darkTheme ? CustomDarkTheme : CustomDefaultTheme}>
         <Stack.Navigator
           screenOptions={{
             headerStyle: {
@@ -77,14 +89,13 @@ const MainNavigation = () => {
           }}>
           <Stack.Screen
             name="Home"
-            component={MyTabs}
-            // options={({ navigation }) => ({})}
+            component={HomeMain}
             options={({ navigation }) => ({
               headerRight: () => (
                 <Ionicons
                   style={{ marginRight: 16 }}
                   color="#fff"
-                  onPress={() => navigation.navigate('SearchScreen')}
+                  onPress={() => navigation.navigate('Search Image')}
                   name="search"
                   size={24}
                 />
@@ -102,14 +113,7 @@ const MainNavigation = () => {
           />
           <Stack.Screen
             name="ImageViewScreen"
-            options={{
-              headerStyle: {
-                backgroundColor: '#000',
-                elevation: 0
-              },
-              headerTintColor: '#fff',
-              title: ''
-            }}
+            options={{ headerShown: false }}
             component={ImageViewScreen}
           />
           <Stack.Screen
@@ -118,8 +122,8 @@ const MainNavigation = () => {
             component={ImageByTopic}
           />
           <Stack.Screen
-            name="SearchScreen"
-            options={{ title: 'SearchScreen' }}
+            name="Search Image"
+            options={{ headerShown: false }}
             component={SearchScreen}
           />
           <Stack.Screen
@@ -129,7 +133,7 @@ const MainNavigation = () => {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </ThemeContext.Provider>
+    </PaperProvider>
   )
 }
 

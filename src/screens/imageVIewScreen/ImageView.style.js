@@ -1,11 +1,6 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    paddingTop: 10,
-    paddingHorizontal: 10
-  },
   SafeAreaView1: { flex: 1, backgroundColor: '#000' },
   ImageView: { flex: 1 },
   FlotingButton: {

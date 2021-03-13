@@ -1,27 +1,34 @@
 import React, { useState } from 'react'
-import { StatusBar, Text, Image } from 'react-native'
+import { StatusBar, Image, SafeAreaView } from 'react-native'
 import { URL, PHOTOS, CLIENT_ID, SEARCH } from '../../constants/constants'
 import MasonryList from 'react-native-masonry-list'
-import {
-  Container,
-  Content,
-  Item,
-  Input,
-  Icon,
-  View,
-  Button
-} from 'native-base'
-import AppHeader from '../../components/appHeader'
+import { View } from 'native-base'
+import { useTheme } from '@react-navigation/native'
+import { Colors } from '../../utils/Colors'
+import DismissKeyboardView from '../../components/DismissKeyboard'
+import { Searchbar, Subheading } from 'react-native-paper'
+import ErrorText from '../../components/errorText'
 import styles from './Search.style'
 const axios = require('axios')
 const SearchScreen = ({ navigation }) => {
+  const appTheme = useTheme()
   const [apiData, setapiData] = useState(null)
   const [loading, setloading] = useState(false)
   const [pageNumber, setpageNumber] = useState(1)
   const [searchText, setsearchText] = useState('')
+  const [errorObj, seterrorObj] = useState({
+    isError: false,
+    errorMeesage: ''
+  })
+
+  const clearError = () => {
+    seterrorObj({
+      isError: false,
+      errorMeesage: ''
+    })
+  }
 
   const getImages = () => {
-    console.log('PAGE NUMBER SEARCH', pageNumber)
     setloading(true)
     axios
       .get(
@@ -30,8 +37,14 @@ const SearchScreen = ({ navigation }) => {
         )}`
       )
       .then(function (response) {
-        console.log('SUSUS', response)
-        // handle success
+        setpageNumber(pageNumber + 1)
+        if (response.data.results.length == 0) {
+          seterrorObj({
+            isError: true,
+            errorMeesage: 'No Image Found.'
+          })
+          return
+        }
         if (apiData == null) {
           let list = response.data.results.map(data => {
             return {
@@ -45,9 +58,9 @@ const SearchScreen = ({ navigation }) => {
               ]
             }
           })
-          console.log('list', list)
           setapiData(list)
           setloading(false)
+          clearError()
         } else {
           setloading(false)
           let oldList = apiData
@@ -64,86 +77,74 @@ const SearchScreen = ({ navigation }) => {
             }
           })
           setapiData([...oldList, ...list])
+          clearError()
         }
-        // console.log(response.data.results)
       })
       .catch(function (error) {
-        // handle error
+        seterrorObj({
+          isError: true,
+          errorMeesage: String(error)
+        })
         console.log(error)
-      })
-      .then(function () {
-        // always executed
       })
   }
 
   return (
-    <>
-      <StatusBar barStyle="default" />
-      <View style={{ flex: 1 }}>
-        <Container>
-          <Content>
-            <View style={{ margin: 8, borderRadius: 8, marginHorizontal: 16 }}>
-              <Item>
-                <Icon active name="search" />
-                <Input
-                  placeholder="Search Image"
-                  value={searchText}
-                  onChangeText={setsearchText}
-                  onSubmitEditing={() => {
-                    console.log('GET TH EIAMG')
-                    getImages(pageNumber)
-                  }}
-                />
-                <Icon
-                  active
-                  name="close"
-                  onPress={() => {
-                    setapiData(null)
-                    console.log('HHH')
-                    setsearchText('')
-                    setpageNumber(1)
-                  }}
-                />
-              </Item>
-            </View>
-
-            {apiData ? (
-              <MasonryList
-                rerender={false}
-                images={apiData}
-                style={{ flex: 1 }}
-                keyExtractor={(item, index) => index.toString()}
-                enableEmptySections={true}
-                onEndReachedThreshold={0.1}
-                onPressImage={item => {
-                  navigation.navigate('ImageViewScreen', { item })
-                }}
-              />
-            ) : (
-              <Image
-                style={styles.imageIcon}
-                source={require('../../assets/images/search_iamge.png')}
-              />
-            )}
-            {apiData != null && !loading ? (
-              <View style={styles.loadBtnStyle}>
-                <Button
-                  primary
-                  onPress={() => {
-                    if (!loading) {
-                      setpageNumber(pageNumber + 1)
-                      console.log('GET IAMGE')
-                      getImages()
-                    }
-                  }}>
-                  <Text> Load More </Text>
-                </Button>
-              </View>
+    <View style={{ flex: 1 }}>
+      <StatusBar backgroundColor={Colors.primary} barStyle="light-content" />
+      <DismissKeyboardView style={{ flex: 1 }}>
+        <SafeAreaView>
+          <Searchbar
+            icon="arrow-left"
+            autoFocus={true}
+            style={{ margin: 14 }}
+            onSubmitEditing={() => {
+              getImages(pageNumber)
+            }}
+            placeholder="Search Your Image Here"
+            onChangeText={setsearchText}
+            value={searchText}
+            onIconPress={() => {
+              navigation.goBack()
+            }}
+          />
+        </SafeAreaView>
+        {apiData ? (
+          <MasonryList
+            rerender={false}
+            images={apiData}
+            backgroundColor={
+              appTheme.dark ? Colors.backgroundColor : Colors.white
+            }
+            style={{ flex: 1 }}
+            keyExtractor={(item, index) => index.toString()}
+            enableEmptySections={true}
+            onEndReachedThreshold={0.1}
+            onEndReached={() => {
+              if (!loading) {
+                getImages()
+              }
+            }}
+            onPressImage={item => {
+              navigation.navigate('ImageViewScreen', { item })
+            }}
+          />
+        ) : (
+          <View>
+            <Image
+              style={[
+                styles.imageIcon,
+                { tintColor: appTheme.dark ? Colors.white : '#000' }
+              ]}
+              source={require('../../assets/images/search_iamge.png')}
+            />
+            {errorObj.isError ? (
+              <ErrorText errorMeesage={errorObj.errorMeesage} />
             ) : null}
-          </Content>
-        </Container>
-      </View>
-    </>
+          </View>
+        )}
+      </DismissKeyboardView>
+    </View>
   )
 }
 

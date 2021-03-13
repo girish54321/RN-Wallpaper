@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import RNFetchBlob from 'rn-fetch-blob'
-import { View, StatusBar } from 'react-native'
+import { View, StatusBar, useWindowDimensions } from 'react-native'
 import { URL, PHOTOS, CLIENT_ID } from '../../constants/constants'
 import { LoadingView } from '../../constants/loadingView'
 import { AppAlert } from '../../constants/appAlert'
 import MasonryList from 'react-native-masonry-list'
 import { Colors } from '../../utils/Colors'
 import { useTheme } from '@react-navigation/native'
+import { TabView, SceneMap } from 'react-native-tab-view'
 const Home = ({ navigation }) => {
   const appTheme = useTheme()
   const [apiData, setapiData] = useState(null)
@@ -18,7 +19,6 @@ const Home = ({ navigation }) => {
   }, [])
 
   const getImages = () => {
-    console.log('PAGE NUMBER HOME', pageNumber)
     setloading(true)
     RNFetchBlob.fetch(
       'GET',
@@ -30,7 +30,7 @@ const Home = ({ navigation }) => {
         if (status == 200) {
           setpageNumber(pageNumber + 1)
           let json = res.json()
-          console.log('JSONE home', json.length)
+
           if (apiData == null) {
             let list = json.map(data => {
               return {
@@ -77,7 +77,6 @@ const Home = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <StatusBar backgroundColor={Colors.primary} barStyle="light-content" />
-      {/* <StatusBar barStyle="default" /> */}
       {apiData == null ? (
         <LoadingView />
       ) : (
@@ -92,7 +91,6 @@ const Home = ({ navigation }) => {
           images={apiData}
           onEndReachedThreshold={0.1}
           onEndReached={() => {
-            console.log('ON END Home')
             getImages(pageNumber)
           }}
         />

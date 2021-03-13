@@ -17,7 +17,6 @@ const Trending = ({ navigation }) => {
   }, [])
 
   const getImages = page => {
-    console.log('PAGE NUMBER  TRENDING', page)
     setloading(true)
     RNFetchBlob.fetch(
       'GET',
@@ -29,7 +28,7 @@ const Trending = ({ navigation }) => {
           setpageNumber(pageNumber + 1)
           setloading(false)
           let json = res.json()
-          console.log('JSONE TRENDING', json.length)
+
           if (apiData == null) {
             let list = json.map(data => {
               return {
@@ -85,7 +84,6 @@ const Trending = ({ navigation }) => {
       images={apiData}
       onEndReachedThreshold={0.1}
       onEndReached={() => {
-        console.log('ON END TERNDING')
         getImages(pageNumber)
       }}
     />

@@ -18,22 +18,20 @@ import { AppAlert } from '../../constants/appAlert'
 import AutoHeightImage from 'react-native-auto-height-image'
 import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions'
 import CameraRoll from '@react-native-community/cameraroll'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { Colors } from '../../utils/Colors'
 const width = Dimensions.get('window').width
-const height = Dimensions.get('window').height
 import { useTheme } from '@react-navigation/native'
 const ImageViewScreen = ({ route, navigation }) => {
   const { item } = route.params
   const appTheme = useTheme()
   const bottomSheetRef = useRef(null)
   const snapPoints = useMemo(() => ['1%', '35%'], [])
-  console.log('item', appTheme)
-  const handleSheetChanges = useCallback(index => {
-    console.log('handleSheetChanges', index)
-  }, [])
+  const handleSheetChanges = useCallback(index => {}, [])
 
   const requestiOSermission = async () => {
-    var result = await check(PERMISSIONS.IOS.PHOTO_LIBRARY)
-    var permissionGranted
+    let result = await check(PERMISSIONS.IOS.PHOTO_LIBRARY)
+    let permissionGranted
     switch (result) {
       case RESULTS.UNAVAILABLE:
         console.log(
@@ -45,7 +43,7 @@ const ImageViewScreen = ({ route, navigation }) => {
         console.log(
           'The permission has not been requested / is denied but requestable'
         )
-        request(PERMISSIONS.IOS.PHOTO_LIBRARY).then(result => {
+        request(PERMISSIONS.IOS.PHOTO_LIBRARY).then(() => {
           permissionGranted = true
         })
         break
@@ -120,67 +118,100 @@ const ImageViewScreen = ({ route, navigation }) => {
   }
 
   return (
-    <>
-      <StatusBar backgroundColor={'#000'} />
+    <View style={{ flex: 1 }}>
+      <StatusBar backgroundColor={Colors.primary} barStyle="light-content" />
       <SafeAreaView style={styles.SafeAreaView1}>
-        <AutoHeightImage
-          width={width}
-          style={styles.ImageView}
-          resizeMode="contain"
-          source={{ uri: item.source.uri }}
-        />
-        <TouchableOpacity
-          style={styles.FlotingButton}
-          onPress={() => {
-            bottomSheetRef.current.expand()
-          }}>
-          <Icon name={'arrow-down-circle-outline'} size={25} color={'blue'} />
-        </TouchableOpacity>
-        <BottomSheet
-          ref={bottomSheetRef}
-          index={-1}
-          snapPoints={snapPoints}
-          onChange={handleSheetChanges}>
-          <View
-            style={[
-              styles.contentContainer,
-              { backgroundColor: appTheme.colors.background }
-            ]}>
-            <FlatList
-              data={item.data}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  onPress={() => {
-                    downlodImage(item.data)
-                    bottomSheetRef.current.close()
-                  }}
-                  style={{
-                    height: 56,
-                    width: width,
-                    flex: 1
-                  }}>
-                  <View
-                    style={{
-                      flex: 1,
-                      padding: 16,
-                      justifyContent: 'space-between',
-                      flexDirection: 'row'
-                    }}>
-                    <Text
-                      style={{
-                        textAlign: 'left',
-                        color: appTheme.colors.text
-                      }}>
-                      {item.name}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              )}
+        <View style={styles.SafeAreaView1}>
+          <AutoHeightImage
+            width={width}
+            style={styles.ImageView}
+            resizeMode="contain"
+            source={{ uri: item.source.uri }}
+          />
+          <TouchableOpacity
+            style={{
+              margin: 16,
+              position: 'absolute',
+              flex: 1,
+              left: 0,
+              top: 1
+            }}
+            onPress={() => {
+              navigation.goBack()
+            }}>
+            <Ionicons
+              color="#fff"
+              onPress={() => {
+                navigation.goBack()
+              }}
+              name={
+                Platform.OS == 'ios'
+                  ? 'chevron-back-outline'
+                  : 'arrow-back-outline'
+              }
+              size={24}
             />
-          </View>
-        </BottomSheet>
+          </TouchableOpacity>
+          <SafeAreaView>
+            <TouchableOpacity
+              style={styles.FlotingButton}
+              onPress={() => {
+                bottomSheetRef.current.expand()
+              }}>
+              <Icon
+                name={'arrow-down-circle-outline'}
+                size={25}
+                color={Colors.primary}
+              />
+            </TouchableOpacity>
+          </SafeAreaView>
+        </View>
       </SafeAreaView>
-    </>
+      <BottomSheet
+        ref={bottomSheetRef}
+        index={-1}
+        snapPoints={snapPoints}
+        onChange={handleSheetChanges}>
+        <View
+          style={[
+            styles.contentContainer,
+            { backgroundColor: appTheme.colors.background }
+          ]}>
+          <FlatList
+            bounces={false}
+            data={item.data}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() => {
+                  downlodImage(item.data)
+                  bottomSheetRef.current.close()
+                }}
+                style={{
+                  height: 56,
+                  width: width,
+                  flex: 1
+                }}>
+                <View
+                  style={{
+                    flex: 1,
+                    padding: 16,
+                    justifyContent: 'space-between',
+                    flexDirection: 'row'
+                  }}>
+                  <Text
+                    style={{
+                      textAlign: 'left',
+                      color: appTheme.colors.text
+                    }}>
+                    {item.name}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+      </BottomSheet>
+    </View>
   )
 }
 
