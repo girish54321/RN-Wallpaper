@@ -16,6 +16,7 @@
     "release:android": "cd android && ./gradlew assembleRelease",
     "clean:android": "cd android && ./gradlew clean",
     "release:play": "cd android && ./gradlew bundleRelease",
+    "pod:install":"cd ios && pod install",
     "test:apk": "react-native run-android --variant=release"
   },
   "dependencies": {
@@ -32,6 +33,7 @@
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-auto-height-image": "^3.2.4",
+    "react-native-bootsplash": "^3.1.5",
     "react-native-elements": "^3.2.0",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-masonry-list": "^2.16.1",

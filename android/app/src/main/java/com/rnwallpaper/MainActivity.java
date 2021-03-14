@@ -1,7 +1,8 @@
 package com.rnwallpaper;
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
-
+import android.os.Bundle; // <-- Splash Screen
+import com.zoontek.rnbootsplash.RNBootSplash; // <-- Splash Screen
 public class MainActivity extends ReactActivity {
 
   /**
@@ -13,6 +14,7 @@ public class MainActivity extends ReactActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(null);
+          RNBootSplash.init(R.drawable.bootsplash, MainActivity.this); // <-- Splash Screen
   }
   
   @Override
