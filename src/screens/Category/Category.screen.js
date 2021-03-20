@@ -36,7 +36,6 @@ const Category = ({ navigation }) => {
               }
             })
             setapiData(list)
-            // setapiData(list)
           }
         } else {
           AppAlert('Error ' + String(status), 'Some Thing Went Worng')
@@ -53,41 +52,36 @@ const Category = ({ navigation }) => {
   }
 
   return (
-    <>
-      <View style={styles.SafeAreaView1}>
-        {apiData.length == 0 ? (
-          <LoadingView />
-        ) : (
-          <MasonryList
-            backgroundColor={
-              appTheme.dark ? Colors.backgroundColor : Colors.white
-            }
-            rerender={true}
-            images={apiData}
-            onPressImage={goToIamgeView}
-            renderIndividualHeader={data => {
-              return (
-                <TouchableWithoutFeedback>
-                  <View
-                    style={{
+    <View style={styles.SafeAreaView1}>
+      {apiData.length == 0 ? (
+        <LoadingView />
+      ) : (
+        <MasonryList
+          backgroundColor={
+            appTheme.dark ? Colors.backgroundColor : Colors.white
+          }
+          rerender={true}
+          images={apiData}
+          onPressImage={goToIamgeView}
+          renderIndividualHeader={data => {
+            return (
+              <TouchableWithoutFeedback>
+                <View
+                  style={[
+                    styles.imageHeder,
+                    {
                       width: data.masonryDimensions.width,
-                      margin: data.masonryDimensions.gutter / 2,
-                      position: 'absolute',
-                      zIndex: 10,
-                      flexDirection: 'row',
-                      padding: 5,
-                      alignItems: 'center',
-                      backgroundColor: 'rgba(000,000,000,0.4)'
-                    }}>
-                    <Text style={{ color: '#fff' }}>{data.title}</Text>
-                  </View>
-                </TouchableWithoutFeedback>
-              )
-            }}
-          />
-        )}
-      </View>
-    </>
+                      margin: data.masonryDimensions.gutter / 2
+                    }
+                  ]}>
+                  <Text style={{ color: '#fff' }}>{data.title}</Text>
+                </View>
+              </TouchableWithoutFeedback>
+            )
+          }}
+        />
+      )}
+    </View>
   )
 }
 

@@ -91,7 +91,10 @@ const SearchScreen = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <StatusBar backgroundColor={Colors.primary} barStyle="light-content" />
+      <StatusBar
+        backgroundColor={appTheme.colors.background}
+        barStyle={appTheme.dark ? 'light-content' : 'dark-content'}
+      />
       <DismissKeyboardView style={{ flex: 1 }}>
         <SafeAreaView>
           <Searchbar

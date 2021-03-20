@@ -6,3 +6,7 @@ export const CLIENT_ID =
 export const PHOTOS = 'photos'
 export const TOPICS = 'topics'
 export const SEARCH = 'search'
+
+//CONST FOR
+
+export const THEME = 'THEME'
