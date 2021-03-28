@@ -3,10 +3,11 @@ import React, { useEffect } from 'react'
 import MainNavigation from './navigation/navigation'
 import { enableScreens } from 'react-native-screens'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
 import rootReducer from './redux/rootReducer'
 import RNBootSplash from 'react-native-bootsplash'
-const store = createStore(rootReducer)
+import ReduxThunk from 'redux-thunk'
+import { applyMiddleware, createStore } from 'redux'
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
 enableScreens()
 
 const App = () => {

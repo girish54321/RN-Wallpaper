@@ -16,7 +16,7 @@
     "release:android": "cd android && ./gradlew assembleRelease",
     "clean:android": "cd android && ./gradlew clean",
     "release:play": "cd android && ./gradlew bundleRelease",
-    "pod:install":"cd ios && pod install",
+    "pod:install": "cd ios && pod install",
     "test:apk": "react-native run-android --variant=release"
   },
   "dependencies": {

@@ -8,6 +8,7 @@ export default StyleSheet.create({
   },
   SafeAreaView1: { flex: 1 },
   SafeAreaView2: { flex: 1 },
+  mainView: { flex: 1 },
   footer: {
     padding: 10,
     justifyContent: 'center',
