@@ -1,7 +1,8 @@
 import {
   SET_SEARCH_IMAGE,
   SET_SEARCH_IMAGE_ERROR,
-  SET_SEARCH_IMAGE_LOADING
+  SET_SEARCH_IMAGE_LOADING,
+  CLEAR_SEARCH_IMAGE
 } from './actionTypes'
 import { URL, PHOTOS, CLIENT_ID, SEARCH } from '../../constants/constants'
 import { setImageWithData } from '../../utils/helper'
@@ -48,4 +49,8 @@ export const setSearchError = payload => ({
 export const setSearchLoading = payload => ({
   type: SET_SEARCH_IMAGE_LOADING,
   payload
+})
+
+export const clearSearch = payload => ({
+  type: CLEAR_SEARCH_IMAGE
 })

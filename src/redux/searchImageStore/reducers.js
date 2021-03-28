@@ -1,7 +1,8 @@
 import {
   SET_SEARCH_IMAGE,
   SET_SEARCH_IMAGE_ERROR,
-  SET_SEARCH_IMAGE_LOADING
+  SET_SEARCH_IMAGE_LOADING,
+  CLEAR_SEARCH_IMAGE
 } from './actionTypes'
 const initialState = {
   isLoading: true,
@@ -33,6 +34,14 @@ export const searchImageReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true
+      }
+
+    case CLEAR_SEARCH_IMAGE:
+      return {
+        ...state,
+        isLoading: false,
+        error: null,
+        images: []
       }
 
     default:

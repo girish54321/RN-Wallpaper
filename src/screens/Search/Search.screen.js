@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StatusBar, SafeAreaView } from 'react-native'
 import MasonryList from 'react-native-masonry-list'
 import { View } from 'native-base'
@@ -7,7 +7,10 @@ import { Colors } from '../../utils/Colors'
 import DismissKeyboardView from '../../components/DismissKeyboard'
 import { Searchbar } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
-import { setSearchImages } from '../../redux/searchImageStore/action'
+import {
+  setSearchImages,
+  clearSearch
+} from '../../redux/searchImageStore/action'
 import style from './Search.style'
 
 const SearchScreen = ({ navigation }) => {
@@ -16,6 +19,10 @@ const SearchScreen = ({ navigation }) => {
   let images = data.searchImageReducer
   const searchDispatch = useDispatch()
   const [searchText, setsearchText] = useState('')
+
+  useEffect(() => {
+    searchDispatch(clearSearch())
+  }, [])
 
   return (
     <View style={style.f1}>
