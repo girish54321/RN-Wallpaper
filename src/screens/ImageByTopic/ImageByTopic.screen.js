@@ -5,6 +5,7 @@ import MasonryList from 'react-native-masonry-list'
 import { Colors } from '../../utils/Colors'
 import { useTheme } from '@react-navigation/native'
 import { useSelector, useDispatch } from 'react-redux'
+import LoadingView from '../../components/lodingView'
 import {
   setImageByTopicImages,
   setImageByTopicClear
@@ -40,7 +41,17 @@ const ImageByTopic = ({ navigation, route }) => {
     />
   )
 
-  return <View style={styles.SafeAreaView1}>{renderContent()}</View>
+  const lodingView = () => {
+    return <LoadingView />
+  }
+
+  return (
+    <View style={styles.SafeAreaView1}>
+      {images.isLoading && images.images.length === 0
+        ? lodingView()
+        : renderContent()}
+    </View>
+  )
 }
 
 export default ImageByTopic

@@ -4,6 +4,7 @@ import MasonryList from 'react-native-masonry-list'
 import { View } from 'native-base'
 import { useTheme } from '@react-navigation/native'
 import { Colors } from '../../utils/Colors'
+import LoadingView from '../../components/lodingView'
 import DismissKeyboardView from '../../components/DismissKeyboard'
 import { Searchbar } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
@@ -47,26 +48,29 @@ const SearchScreen = ({ navigation }) => {
             }}
           />
         </SafeAreaView>
-
-        <MasonryList
-          rerender={false}
-          images={images.images}
-          backgroundColor={
-            appTheme.dark ? Colors.backgroundColor : Colors.white
-          }
-          style={style.f1}
-          keyExtractor={(item, index) => index.toString()}
-          enableEmptySections={true}
-          onEndReachedThreshold={0.1}
-          onEndReached={() => {
-            if (!images.isLoading) {
-              searchDispatch(setSearchImages({ searchText: searchText }))
+        {images.isLoading && images.images.length === 0 ? (
+          <LoadingView />
+        ) : (
+          <MasonryList
+            rerender={false}
+            images={images.images}
+            backgroundColor={
+              appTheme.dark ? Colors.backgroundColor : Colors.white
             }
-          }}
-          onPressImage={item => {
-            navigation.navigate('ImageViewScreen', { item })
-          }}
-        />
+            style={style.f1}
+            keyExtractor={(item, index) => index.toString()}
+            enableEmptySections={true}
+            onEndReachedThreshold={0.1}
+            onEndReached={() => {
+              if (!images.isLoading) {
+                searchDispatch(setSearchImages({ searchText: searchText }))
+              }
+            }}
+            onPressImage={item => {
+              navigation.navigate('ImageViewScreen', { item })
+            }}
+          />
+        )}
       </DismissKeyboardView>
     </View>
   )
