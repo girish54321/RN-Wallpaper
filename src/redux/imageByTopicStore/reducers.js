@@ -1,7 +1,8 @@
 import {
   SET_IMAGE_BY_TOPIC_IMAGE,
   SET_IMAGE_BY_TOPIC_IMAGE_ERROR,
-  SET_IMAGE_BY_TOPIC_IMAGE_LOADING
+  SET_IMAGE_BY_TOPIC_IMAGE_LOADING,
+  SET_IMAGE_BY_TOPIC_IMAGE_CLERAR
 } from './actionTypes'
 const initialState = {
   isLoading: true,
@@ -33,6 +34,12 @@ export const topicImageReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true
+      }
+
+    case SET_IMAGE_BY_TOPIC_IMAGE_CLERAR:
+      return {
+        ...state,
+        images: []
       }
 
     default:

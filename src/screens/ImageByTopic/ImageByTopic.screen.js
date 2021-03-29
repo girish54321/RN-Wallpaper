@@ -5,18 +5,24 @@ import MasonryList from 'react-native-masonry-list'
 import { Colors } from '../../utils/Colors'
 import { useTheme } from '@react-navigation/native'
 import { useSelector, useDispatch } from 'react-redux'
-import { setImageByTopicImages } from '../../redux/imageByTopicStore/action'
+import {
+  setImageByTopicImages,
+  setImageByTopicClear
+} from '../../redux/imageByTopicStore/action'
 const ImageByTopic = ({ navigation, route }) => {
   const { item } = route.params
   const appTheme = useTheme()
   const data = useSelector(state => state)
   let images = data.topicImageReducer
   const imageByTopicDispatch = useDispatch()
+
   useEffect(() => {
     navigation.setOptions({ title: item.title })
     imageByTopicDispatch(setImageByTopicImages({ id: item.id }))
+    return () => {
+      imageByTopicDispatch(setImageByTopicClear())
+    }
   }, [])
-
   const renderContent = () => (
     <MasonryList
       backgroundColor={appTheme.dark ? Colors.backgroundColor : Colors.white}

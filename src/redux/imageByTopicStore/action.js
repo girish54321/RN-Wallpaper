@@ -1,7 +1,8 @@
 import {
   SET_IMAGE_BY_TOPIC_IMAGE,
   SET_IMAGE_BY_TOPIC_IMAGE_ERROR,
-  SET_IMAGE_BY_TOPIC_IMAGE_LOADING
+  SET_IMAGE_BY_TOPIC_IMAGE_LOADING,
+  SET_IMAGE_BY_TOPIC_IMAGE_CLERAR
 } from './actionTypes'
 import { URL, PHOTOS, CLIENT_ID, TOPICS } from '../../constants/constants'
 import { setImageWithData } from '../../utils/helper'
@@ -47,5 +48,10 @@ export const setImageByTopicError = payload => ({
 
 export const setImageByTopicLoading = payload => ({
   type: SET_IMAGE_BY_TOPIC_IMAGE_LOADING,
+  payload
+})
+
+export const setImageByTopicClear = payload => ({
+  type: SET_IMAGE_BY_TOPIC_IMAGE_CLERAR,
   payload
 })
