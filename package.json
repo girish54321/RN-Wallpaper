@@ -43,6 +43,7 @@
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^2.15.0",
+    "react-native-sticky-parallax-header": "^0.4.0",
     "react-native-tab-view": "^3.0.0",
     "react-native-vector-icons": "^7.1.0",
     "react-redux": "^7.2.2",

@@ -18,10 +18,12 @@ export const setSearchImages = payload => async (dispatch, getState) => {
         payload.searchText
       }&page=${String(pageNumber)}`
     )
+
     if (response.status == 200) {
       let data = {
         images: setImageWithData(response.data.results),
-        page: pageNumber + 1
+        page: pageNumber + 1,
+        total_pages: response.data.total_pages
       }
       dispatch({
         type: SET_SEARCH_IMAGE,
@@ -29,7 +31,7 @@ export const setSearchImages = payload => async (dispatch, getState) => {
       })
     } else {
       dispatch({
-        type: SET_SEARCH_IMAGE,
+        type: SET_SEARCH_IMAGE_ERROR,
         payload: `${response.status}`
       })
     }

@@ -6682,6 +6682,13 @@ react-native-size-matters@^0.3.1:
   resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.3.1.tgz#24d0cfc335a2c730f6d58bd7b43ea5a41be4b49f"
   integrity sha512-mKOfBLIBFBcs9br1rlZDvxD5+mAl8Gfr5CounwJtxI6Z82rGrMO+Kgl9EIg3RMVf3G855a85YVqHJL2f5EDRlw==
 
+react-native-sticky-parallax-header@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-sticky-parallax-header/-/react-native-sticky-parallax-header-0.4.0.tgz#412f50f946dd9e14938ef0dc556608aab5e8a347"
+  integrity sha512-R2aYTxY/Gz/AKwqxsigY6ukxiXguXgLnletIuxmcKSYBK5R6UpgL9hfXrAsfFV3yhgiLsW5fsN9NhxzVGsIrYQ==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-tab-view@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-3.0.0.tgz#ea01e0956a4a96dd87d3cfdd8ee39f9aad319943"

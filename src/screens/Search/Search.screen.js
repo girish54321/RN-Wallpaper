@@ -4,10 +4,10 @@ import MasonryList from 'react-native-masonry-list'
 import { View } from 'native-base'
 import { useTheme } from '@react-navigation/native'
 import { Colors } from '../../utils/Colors'
-import LoadingView from '../../components/lodingView'
 import DismissKeyboardView from '../../components/DismissKeyboard'
 import { Searchbar } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
+import LoadingListView from '../../components/loadingListView'
 import {
   setSearchImages,
   clearSearch
@@ -49,7 +49,7 @@ const SearchScreen = ({ navigation }) => {
           />
         </SafeAreaView>
         {images.isLoading && images.images.length === 0 ? (
-          <LoadingView />
+          <LoadingListView />
         ) : (
           <MasonryList
             rerender={false}
@@ -62,7 +62,7 @@ const SearchScreen = ({ navigation }) => {
             enableEmptySections={true}
             onEndReachedThreshold={0.1}
             onEndReached={() => {
-              if (!images.isLoading) {
+              if (!images.isLoading && images.total_pages !== images.page) {
                 searchDispatch(setSearchImages({ searchText: searchText }))
               }
             }}

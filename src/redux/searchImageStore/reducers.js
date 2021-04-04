@@ -8,7 +8,8 @@ const initialState = {
   isLoading: true,
   error: null,
   images: [],
-  page: 1
+  page: 1,
+  total_pages: 0
 }
 
 export const searchImageReducer = (state = initialState, action) => {
@@ -20,7 +21,8 @@ export const searchImageReducer = (state = initialState, action) => {
         images: [...state.images, ...data.images],
         isLoading: false,
         error: null,
-        page: data.page
+        page: data.page,
+        total_pages: data.total_pages
       }
 
     case SET_SEARCH_IMAGE_ERROR:
@@ -41,7 +43,8 @@ export const searchImageReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         error: null,
-        images: []
+        images: [],
+        total_pages: 0
       }
 
     default:

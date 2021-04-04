@@ -5,8 +5,8 @@ import { Colors } from '../../utils/Colors'
 import { useSelector, useDispatch } from 'react-redux'
 import { useTheme } from '@react-navigation/native'
 import { setHomeImages } from '../../redux/homeImageStore/action'
-import LoadingView from '../../components/lodingView'
 import style from './Home.style'
+import LoadingListView from '../../components/loadingListView'
 const Home = ({ navigation }) => {
   const appTheme = useTheme()
   const data = useSelector(state => state)
@@ -21,7 +21,7 @@ const Home = ({ navigation }) => {
     <View style={style.mainView}>
       <StatusBar backgroundColor={Colors.primary} barStyle="light-content" />
       {images.isLoading && images.images.length === 0 ? (
-        <LoadingView />
+        <LoadingListView />
       ) : (
         <MasonryList
           backgroundColor={

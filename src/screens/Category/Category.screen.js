@@ -4,9 +4,9 @@ import { URL, TOPICS, CLIENT_ID } from '../../constants/constants'
 import styles from './Category.style'
 import RNFetchBlob from 'rn-fetch-blob'
 import MasonryList from 'react-native-masonry-list'
-import { LoadingView } from '../../constants/loadingView'
 import AppAlert from '../../constants/appAlert'
 import { Colors } from '../../utils/Colors'
+import LoadingListView from '../../components/loadingListView'
 import { useTheme } from '@react-navigation/native'
 const Category = ({ navigation }) => {
   const [apiData, setapiData] = useState([])
@@ -21,17 +21,27 @@ const Category = ({ navigation }) => {
         let status = res.info().status
         if (status == 200) {
           let json = res.json()
+
           if (apiData.length == 0) {
             let list = json.map(data => {
               return {
                 id: data.id,
                 title: data.title,
-                uri: data.cover_photo.urls.small,
+                uri: data.cover_photo ? data.cover_photo.urls.small : '',
                 dimensions: { width: data.width, height: data.height },
                 data: [
-                  { name: 'Small', data: data.cover_photo.urls.small },
-                  { name: 'Full', data: data.cover_photo.urls.full },
-                  { name: 'Raw', data: data.cover_photo.urls.raw }
+                  {
+                    name: 'Small',
+                    data: data.cover_photo ? data.cover_photo.urls.small : ''
+                  },
+                  {
+                    name: 'Full',
+                    data: data.cover_photo ? data.cover_photo.urls.full : ''
+                  },
+                  {
+                    name: 'Raw',
+                    data: data.cover_photo ? data.cover_photo.urls.raw : ''
+                  }
                 ]
               }
             })
@@ -39,11 +49,10 @@ const Category = ({ navigation }) => {
           }
         } else {
           AppAlert('Error ' + String(status), 'Some Thing Went Worng')
-          console.log('ERROR', status)
         }
       })
       .catch(e => {
-        AppAlert('Error ', String(e))
+        // AppAlert('Error ', String(e))
       })
   }
 
@@ -54,7 +63,7 @@ const Category = ({ navigation }) => {
   return (
     <View style={styles.SafeAreaView1}>
       {apiData.length == 0 ? (
-        <LoadingView />
+        <LoadingListView />
       ) : (
         <MasonryList
           backgroundColor={

@@ -5,7 +5,7 @@ import MasonryList from 'react-native-masonry-list'
 import { Colors } from '../../utils/Colors'
 import { useTheme } from '@react-navigation/native'
 import { useSelector, useDispatch } from 'react-redux'
-import LoadingView from '../../components/lodingView'
+import LoadingListView from '../../components/loadingListView'
 import {
   setImageByTopicImages,
   setImageByTopicClear
@@ -42,7 +42,7 @@ const ImageByTopic = ({ navigation, route }) => {
   )
 
   const lodingView = () => {
-    return <LoadingView />
+    return <LoadingListView />
   }
 
   return (
