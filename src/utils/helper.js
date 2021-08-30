@@ -1,5 +1,3 @@
-// import moment from 'moment'
-// export const FormatData = date => moment(date).format('MMM Do YY')
 export const capitalizeFirstLetter = string => {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
@@ -17,4 +15,12 @@ export const setImageWithData = imageData => {
       ]
     }
   })
+}
+
+export const goToScreen = (navigation, props, screenName) => {
+  if (props) {
+    return navigation.navigate(screenName, { props })
+  } else {
+    return navigation.navigate(screenName)
+  }
 }

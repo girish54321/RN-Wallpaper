@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { TabView } from 'react-native-tab-view'
 import { useWindowDimensions } from 'react-native'
 import Home from '../../screens/Home/Home.screen'

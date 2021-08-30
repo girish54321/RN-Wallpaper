@@ -1,4 +1,4 @@
-import {createStore} from 'redux';
-import {themeReducer} from './reducers';
+import { createStore } from 'redux'
+import { themeReducer } from './reducers'
 
-export const store = createStore(themeReducer);
+export const store = createStore(themeReducer)
