@@ -4,9 +4,10 @@ import {
   SET_HOME_IMAGE_LOADING
 } from './actionTypes'
 import { URL, PHOTOS, CLIENT_ID } from '../../constants/constants'
-import { setImageWithData } from '../../utils/helper'
+import { setImageWithData } from '../../utils/helper/navigation'
 const axios = require('axios')
-export const setHomeImages = payload => async (dispatch, getState) => {
+
+export const setHomeImages = (payload: any) => async (dispatch: any, getState: any) => {
   let pageNumber = getState().homeImageReducer.page
   dispatch({
     type: SET_HOME_IMAGE_LOADING
@@ -38,12 +39,12 @@ export const setHomeImages = payload => async (dispatch, getState) => {
   }
 }
 
-export const setHomeError = payload => ({
+export const setHomeError = (payload: any) => ({
   type: SET_HOME_IMAGE_ERROR,
   payload
 })
 
-export const setHomeLoading = payload => ({
+export const setHomeLoading = (payload: any) => ({
   type: SET_HOME_IMAGE_LOADING,
   payload
 })

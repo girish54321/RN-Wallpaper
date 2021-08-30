@@ -5,17 +5,17 @@ import {
   CLEAR_SEARCH_IMAGE
 } from './actionTypes'
 import { URL, PHOTOS, CLIENT_ID, SEARCH } from '../../constants/constants'
-import { setImageWithData } from '../../utils/helper'
+import { setImageWithData } from '../../utils/helper/navigation'
+
 const axios = require('axios')
-export const setSearchImages = payload => async (dispatch, getState) => {
+export const setSearchImages = (payload: any) => async (dispatch: any, getState: any) => {
   let pageNumber = getState().searchImageReducer.page
   dispatch({
     type: SET_SEARCH_IMAGE_LOADING
   })
   try {
     const response = await axios.get(
-      `${URL}${SEARCH}/${PHOTOS}${CLIENT_ID}&per_page=30&query=${
-        payload.searchText
+      `${URL}${SEARCH}/${PHOTOS}${CLIENT_ID}&per_page=30&query=${payload.searchText
       }&page=${String(pageNumber)}`
     )
 
@@ -43,16 +43,16 @@ export const setSearchImages = payload => async (dispatch, getState) => {
   }
 }
 
-export const setSearchError = payload => ({
+export const setSearchError = (payload: any) => ({
   type: SET_SEARCH_IMAGE_ERROR,
   payload
 })
 
-export const setSearchLoading = payload => ({
+export const setSearchLoading = (payload: any) => ({
   type: SET_SEARCH_IMAGE_LOADING,
   payload
 })
 
-export const clearSearch = payload => ({
+export const clearSearch = (payload: any) => ({
   type: CLEAR_SEARCH_IMAGE
 })

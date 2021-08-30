@@ -4,9 +4,10 @@ import {
   SET_TRENDING_IMAGE_LOADING
 } from './actionTypes'
 import { URL, PHOTOS, CLIENT_ID } from '../../constants/constants'
-import { setImageWithData } from '../../utils/helper'
+import { setImageWithData } from '../../utils/helper/navigation'
 const axios = require('axios')
-export const setTrendingImages = payload => async (dispatch, getState) => {
+
+export const setTrendingImages = (payload: any) => async (dispatch: any, getState: any) => {
   let pageNumber = getState().trendingImageReducer.page
   dispatch({
     type: SET_TRENDING_IMAGE_LOADING
@@ -38,12 +39,12 @@ export const setTrendingImages = payload => async (dispatch, getState) => {
   }
 }
 
-export const setTrendingError = payload => ({
+export const setTrendingError = (payload: any) => ({
   type: SET_TRENDING_IMAGE_ERROR,
   payload
 })
 
-export const setTrendingLoading = payload => ({
+export const setTrendingLoading = (payload: any) => ({
   type: SET_TRENDING_IMAGE_LOADING,
   payload
 })

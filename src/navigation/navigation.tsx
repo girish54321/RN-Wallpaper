@@ -24,7 +24,7 @@ import { THEME } from '../constants/constants'
 const Stack = createStackNavigator()
 
 const MainNavigation = () => {
-  const data = useSelector(state => state)
+  const data: any = useSelector(state => state)
   const darkTheme = data.themeReducer.isDarkTheme
   const themeDispatch = useDispatch()
 

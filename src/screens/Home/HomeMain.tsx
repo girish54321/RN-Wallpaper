@@ -1,9 +1,9 @@
 import React from 'react'
 import { TabView } from 'react-native-tab-view'
 import { useWindowDimensions } from 'react-native'
-import Home from '../../screens/Home/Home.screen'
-import Trending from '../../screens/Trending/Trending.screen'
-import Category from '../../screens/Category/Category.screen'
+import Home from './Home.screen'
+import Trending from '../Trending/Trending.screen'
+import Category from '../Category/Category.screen'
 import { TabBar } from 'react-native-tab-view'
 import { Colors } from '../../utils/Colors'
 const HomeMain = ({ navigation }) => {
@@ -19,7 +19,7 @@ const HomeMain = ({ navigation }) => {
     return <route.screen navigation={navigation} />
   }
 
-  const renderTabBar = props => (
+  const renderTabBar = (props: any) => (
     <TabBar
       {...props}
       indicatorStyle={{ backgroundColor: 'white' }}
@@ -33,7 +33,7 @@ const HomeMain = ({ navigation }) => {
       renderTabBar={renderTabBar}
       navigationState={{ index, routes }}
       renderScene={renderScene}
-      navigation={navigation}
+      // navigation={navigation}
       onIndexChange={setIndex}
       initialLayout={{ width: layout.width }}
     />

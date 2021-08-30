@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo, useCallback } from 'react'
+import React, { useRef, useMemo, useCallback } from 'react'
 import {
   SafeAreaView,
   StatusBar,
@@ -27,7 +27,7 @@ const ImageViewScreen = ({ route, navigation }) => {
   const appTheme = useTheme()
   const bottomSheetRef = useRef(null)
   const snapPoints = useMemo(() => ['1%', '35%'], [])
-  const handleSheetChanges = useCallback(index => {}, [])
+  const handleSheetChanges = useCallback((index: Number) => { }, [])
 
   const requestiOSermission = async () => {
     let result = await check(PERMISSIONS.IOS.PHOTO_LIBRARY)
@@ -156,7 +156,7 @@ const ImageViewScreen = ({ route, navigation }) => {
             <TouchableOpacity
               style={styles.FlotingButton}
               onPress={() => {
-                bottomSheetRef.current.expand()
+                bottomSheetRef?.current?.expand()
               }}>
               <Icon
                 name={'arrow-down-circle-outline'}
@@ -184,7 +184,7 @@ const ImageViewScreen = ({ route, navigation }) => {
               <TouchableOpacity
                 onPress={() => {
                   downlodImage(item.data)
-                  bottomSheetRef.current.close()
+                  bottomSheetRef?.current?.close()
                 }}
                 style={{
                   height: 56,
