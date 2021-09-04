@@ -20,7 +20,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useSelector, useDispatch } from 'react-redux'
 import { changeTheme } from '../redux/themeStore/action'
-import { THEME } from '../constants/constants'
+import { AppConst } from '../constants/constants'
 const Stack = createStackNavigator()
 
 const MainNavigation = () => {
@@ -33,7 +33,7 @@ const MainNavigation = () => {
   }, [])
 
   const checkUserTheme = () => {
-    AsyncStorage.getItem(THEME)
+    AsyncStorage.getItem(AppConst.THEME)
       .then(value => {
         if (value) {
           let data = JSON.parse(value)

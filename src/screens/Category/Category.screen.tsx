@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Text, TouchableWithoutFeedback, View } from 'react-native'
-import { URL, TOPICS, CLIENT_ID } from '../../constants/constants'
+import { AppConst } from '../../constants/constants'
 import styles from './Category.style'
 import RNFetchBlob from 'rn-fetch-blob'
 import MasonryList from 'react-native-masonry-list'
-import AppAlert from '../../constants/appAlert'
+import { AppAlert } from '../../constants/appAlert'
 import { Colors } from '../../utils/Colors'
 import LoadingListView from '../../components/loadingListView'
 import { useTheme } from '@react-navigation/native'
@@ -16,14 +16,14 @@ const Category = ({ navigation }) => {
   }, [])
 
   const getImages = () => {
-    RNFetchBlob.fetch('GET', `${URL}${TOPICS}${CLIENT_ID}&per_page=30`)
+    RNFetchBlob.fetch('GET', `${AppConst.URL}${AppConst.TOPICS}${AppConst.CLIENT_ID}&per_page=30`)
       .then(res => {
         let status = res.info().status
         if (status == 200) {
           let json = res.json()
 
           if (apiData.length == 0) {
-            let list = json.map(data => {
+            let list = json.map((data: any) => {
               return {
                 id: data.id,
                 title: data.title,
