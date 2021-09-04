@@ -23,7 +23,7 @@ const Trending = ({ navigation }) => {
       images={images.images}
       onEndReachedThreshold={0.1}
       onEndReached={() => {
-        if (images.isLoading) {
+        if (!images.isLoading) {
           homeDispatch(setTrendingImages())
         }
       }}

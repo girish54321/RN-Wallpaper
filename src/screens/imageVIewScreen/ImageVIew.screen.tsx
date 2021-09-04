@@ -177,7 +177,7 @@ const ImageViewScreen = ({ route, navigation }) => {
           ]}>
           <FlatList
             bounces={false}
-            images={item.data}
+            data={item.data}
             renderItem={({ item }) => (
               <TouchableOpacity
                 onPress={() => {
