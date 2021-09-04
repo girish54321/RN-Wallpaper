@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, StatusBar, Dimensions } from 'react-native'
+import { View, StatusBar } from 'react-native'
 import MasonryList from 'react-native-masonry-list'
 import { Colors } from '../../utils/Colors'
 import { useSelector, useDispatch } from 'react-redux'
@@ -8,11 +8,9 @@ import { setHomeImages } from '../../redux/homeImageStore/action'
 import style from './Home.style'
 import LoadingListView from '../../components/loadingListView'
 import DeviceInfo from 'react-native-device-info';
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 const Home = ({ navigation }) => {
   const appTheme = useTheme()
-  const data = useSelector(state => state)
+  const data = useSelector((state: any) => state)
   let images = data.homeImageReducer
   const homeDispatch = useDispatch()
   const [isTablet, setisTablet] = useState(false)

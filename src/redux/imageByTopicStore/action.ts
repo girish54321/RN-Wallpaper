@@ -4,7 +4,7 @@ import {
   SET_IMAGE_BY_TOPIC_IMAGE_LOADING,
   SET_IMAGE_BY_TOPIC_IMAGE_CLERAR
 } from './actionTypes'
-import { URL, PHOTOS, CLIENT_ID, TOPICS } from '../../constants/constants'
+import { AppConst } from '../../constants/constants'
 import { setImageWithData } from '../../utils/helper/navigation'
 
 const axios = require('axios')
@@ -15,8 +15,8 @@ export const setImageByTopicImages = (payload: any) => async (dispatch: any, get
   })
   try {
     const response = await axios.get(
-      `${URL}${TOPICS}/${payload.id
-      }/${PHOTOS}${CLIENT_ID}&per_page=30&page=${String(pageNumber)}`
+      `${AppConst.URL}${AppConst.TOPICS}/${payload.id
+      }/${AppConst.PHOTOS}${AppConst.CLIENT_ID}&per_page=30&page=${String(pageNumber)}`
     )
     if (response.status == 200) {
       let data = {

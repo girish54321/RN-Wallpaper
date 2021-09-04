@@ -3,18 +3,19 @@ import {
   SET_HOME_IMAGE_ERROR,
   SET_HOME_IMAGE_LOADING
 } from './actionTypes'
-import { URL, PHOTOS, CLIENT_ID } from '../../constants/constants'
+import { AppConst } from '../../constants/constants'
+
 import { setImageWithData } from '../../utils/helper/navigation'
 const axios = require('axios')
 
-export const setHomeImages = (payload: any) => async (dispatch: any, getState: any) => {
+export const setHomeImages = () => async (dispatch: any, getState: any) => {
   let pageNumber = getState().homeImageReducer.page
   dispatch({
     type: SET_HOME_IMAGE_LOADING
   })
   try {
     const response = await axios.get(
-      `${URL}${PHOTOS}${CLIENT_ID}&order_by=latest&per_page=30&page=${pageNumber}`
+      `${AppConst.URL}${AppConst.PHOTOS}${AppConst.CLIENT_ID}&order_by=latest&per_page=30&page=${pageNumber}`
     )
     if (response.status == 200) {
       let data = {

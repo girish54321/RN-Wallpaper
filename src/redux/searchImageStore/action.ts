@@ -4,7 +4,7 @@ import {
   SET_SEARCH_IMAGE_LOADING,
   CLEAR_SEARCH_IMAGE
 } from './actionTypes'
-import { URL, PHOTOS, CLIENT_ID, SEARCH } from '../../constants/constants'
+import { AppConst } from '../../constants/constants'
 import { setImageWithData } from '../../utils/helper/navigation'
 
 const axios = require('axios')
@@ -15,7 +15,7 @@ export const setSearchImages = (payload: any) => async (dispatch: any, getState:
   })
   try {
     const response = await axios.get(
-      `${URL}${SEARCH}/${PHOTOS}${CLIENT_ID}&per_page=30&query=${payload.searchText
+      `${AppConst.URL}${AppConst.SEARCH}/${AppConst.PHOTOS}${AppConst.CLIENT_ID}&per_page=30&query=${payload.searchText
       }&page=${String(pageNumber)}`
     )
 

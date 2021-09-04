@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useCallback } from 'react'
+import React, { useRef, useMemo, } from 'react'
 import {
   SafeAreaView,
   StatusBar,
@@ -27,7 +27,6 @@ const ImageViewScreen = ({ route, navigation }) => {
   const appTheme = useTheme()
   const bottomSheetRef = useRef(null)
   const snapPoints = useMemo(() => ['1%', '35%'], [])
-  const handleSheetChanges = useCallback((index: Number) => { }, [])
 
   const requestiOSermission = async () => {
     let result = await check(PERMISSIONS.IOS.PHOTO_LIBRARY)
@@ -75,7 +74,7 @@ const ImageViewScreen = ({ route, navigation }) => {
     }
   }
 
-  const downlodImage = async imageUrl => {
+  const downlodImage = async (imageUrl: string) => {
     let permission =
       Platform.OS == 'ios'
         ? await requestiOSermission()
@@ -170,8 +169,7 @@ const ImageViewScreen = ({ route, navigation }) => {
       <BottomSheet
         ref={bottomSheetRef}
         index={-1}
-        snapPoints={snapPoints}
-        onChange={handleSheetChanges}>
+        snapPoints={snapPoints}>
         <View
           style={[
             styles.contentContainer,
@@ -179,7 +177,7 @@ const ImageViewScreen = ({ route, navigation }) => {
           ]}>
           <FlatList
             bounces={false}
-            data={item.data}
+            images={item.data}
             renderItem={({ item }) => (
               <TouchableOpacity
                 onPress={() => {
