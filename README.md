@@ -4,11 +4,8 @@ RN-Wallpaper is a React Native app that allows you to browse, search and downloa
 
 Features:
 - Browse photos by category or search by keyword
-- View photo details, including author, likes and downloads
-- Download photos to your device and use them as wallpapers
-- Set wallpapers as home screen, lock screen or both
-- Mark photos as favorites and access them later in your profile
-- Easy to customize and extend with your own features
+- View photo
+- Download 
 
 Built with React Native, RN-Wallpaper showcases best practices in mobile app development and integrates with Unsplash API using Axios library. You can learn from this open-source project and use it as a starting point for your own app.
 
